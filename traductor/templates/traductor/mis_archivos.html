@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Mis Archivos</h2>
+
+  {% if archivos %}
+    <ol>
+      {% for archivo in archivos %}
+        <li>
+          <strong>Nombre del Archivo:</strong> {{ archivo.nombre }}<br>
+          <strong>Idioma de Destino:</strong> {{ archivo.idioma_destino }}<br>
+          <strong>Fecha de Creación:</strong> {{ archivo.fecha_creacion }}<br>
+          <strong>Traducción:</strong><br>
+          <pre>{{ archivo.traduccion }}</pre>
+
+          <!-- Formulario para confirmar eliminación -->
+          <form method="post" action="{% url 'eliminar_archivo' archivo.pk %}">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este archivo?')">Eliminar</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p>No tienes archivos guardados.</p>
+  {% endif %}
+  
+  <a href="{% url 'home' %}">Volver a la página principal</a>
+{% endblock %}

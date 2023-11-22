@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Traducción de Archivo</h2>
+
+  <!-- Formulario para cargar archivos STR -->
+  <form method="post" enctype="multipart/form-data" action="{% url 'traducir_archivo' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Traducir Archivo</button>
+  </form>
+
+  <!-- Información sobre el límite diario de traducciones -->
+  {% if request.user.is_authenticated %}
+    <p><strong>Límite Diario de Traducciones:</strong> {{ request.user.traducciones_diarias }}</p>
+  {% endif %}
+
+  <hr>
+{% endblock %}
